@@ -1,12 +1,16 @@
 from pathlib import Path
+import os
+import dj_database_url
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-pwiodw#*#c(7q71fdpqv839uw)75zx!^i@hgqig+qmn^*!z-cb'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your_default_secret_key')
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.railway.app', 'localhost']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -52,10 +56,7 @@ LOGOUT_REDIRECT_URL = 'login'
 WSGI_APPLICATION = 'ppm_project.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default='postgres://user:password@localhost/dbname')
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -81,7 +82,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
