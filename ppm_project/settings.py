@@ -11,6 +11,9 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['.railway.app', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-e337.up.railway.app',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
